@@ -39,20 +39,11 @@ export const CombineLetters: React.FC = () => {
   const [index, setIndex] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
 
-  const speak = async (text: string) => {
-    try {
-      const response = await fetch('http://localhost:5050/speak', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text }),
-      })
-      const audioBlob = await response.blob()
-      const audioUrl = URL.createObjectURL(audioBlob)
-      const audio = new Audio(audioUrl)
-      audio.play()
-    } catch (err) {
-      console.error('Failed to speak:', err)
-    }
+  const speak = (text: string) => {
+    const speech = new SpeechSynthesisUtterance(text)
+    speech.lang = 'tr-TR'
+    speech.rate = 0.8
+    window.speechSynthesis.speak(speech)
   }
 
   const handleCombinedClick = async () => {

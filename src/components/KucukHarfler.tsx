@@ -72,37 +72,23 @@ const KucukHarfler: React.FC<KucukHarflerProps> = ({ onGoHome }) => {
 
   const clickSoundRef = useRef(new Audio(require('../assets/sounds/click.mp3')))
 
-  const speakLetter = async (letter: string, index: number) => {
-    try {
-      const response = await fetch('http://localhost:5050/speak', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: letter }),
-      })
+  const speakLetter = (letter: string, index: number) => {
+    const speech = new SpeechSynthesisUtterance(letter)
+    speech.lang = 'tr-TR'
+    speech.rate = 0.8
+    window.speechSynthesis.speak(speech)
 
-      if (response.ok) {
-        const audioBlob = await response.blob()
-        const audioUrl = URL.createObjectURL(audioBlob)
-        const audio = new Audio(audioUrl)
-        audio.play()
+    // Play click sound
+    clickSoundRef.current.currentTime = 0
+    clickSoundRef.current.play()
 
-        // Play click sound
-        clickSoundRef.current.currentTime = 0
-        clickSoundRef.current.play()
+    // Animate + Change Color
+    const newColors = [...buttonColors]
+    newColors[index] = getRandomColor()
+    setButtonColors(newColors)
 
-        // Animate + Change Color
-        const newColors = [...buttonColors]
-        newColors[index] = getRandomColor()
-        setButtonColors(newColors)
-
-        setClickedIndex(index)
-        setTimeout(() => setClickedIndex(null), 300)
-      } else {
-        console.error('Failed to fetch audio:', response.statusText)
-      }
-    } catch (error) {
-      console.error('Error speaking the letter:', error)
-    }
+    setClickedIndex(index)
+    setTimeout(() => setClickedIndex(null), 300)
   }
 
   return (

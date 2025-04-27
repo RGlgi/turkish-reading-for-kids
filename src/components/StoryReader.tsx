@@ -29,21 +29,12 @@ const StoryReader: React.FC<StoryReaderProps> = ({ onGoHome }) => {
 
   const [soundEnabled, setSoundEnabled] = useState(false)
 
-  const playWord = async (word: string) => {
+  const playWord = (word: string) => {
     if (!soundEnabled) return
-    try {
-      const response = await fetch('http://localhost:5050/speak', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: word }),
-      })
-      const audioBlob = await response.blob()
-      const audioUrl = URL.createObjectURL(audioBlob)
-      const audio = new Audio(audioUrl)
-      await audio.play().catch((err) => console.log('Autoplay block', err))
-    } catch (err) {
-      console.error('Error playing word', err)
-    }
+    const speech = new SpeechSynthesisUtterance(word)
+    speech.lang = 'tr-TR'
+    speech.rate = 0.8
+    window.speechSynthesis.speak(speech)
   }
 
   const toggleSound = () => {

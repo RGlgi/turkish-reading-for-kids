@@ -68,20 +68,11 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
     generateQuestion()
   }, [generateQuestion])
 
-  const playSound = async () => {
-    try {
-      const response = await fetch('http://localhost:5050/speak', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: question }),
-      })
-      const audioBlob = await response.blob()
-      const audioUrl = URL.createObjectURL(audioBlob)
-      const audio = new Audio(audioUrl)
-      audio.play()
-    } catch (err) {
-      console.error('Sound error:', err)
-    }
+  const playSound = () => {
+    const speech = new SpeechSynthesisUtterance(question)
+    speech.lang = 'tr-TR'
+    speech.rate = 0.8
+    window.speechSynthesis.speak(speech)
   }
 
   const handleChoiceClick = (choice: string, index: number) => {
