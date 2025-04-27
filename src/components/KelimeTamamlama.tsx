@@ -39,14 +39,14 @@ const KelimeTamamlama: React.FC<KelimeTamamlamaProps> = ({ onGoHome }) => {
   }, [currentIndex, wordData.missingLetter])
 
   const playWordSound = () => {
-    const speech = new SpeechSynthesisUtterance(wordData.fullWord)
+    const speech = new SpeechSynthesisUtterance(wordData.fullWord.toLowerCase()) // ✅ lowercased for clean sound
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
   }
 
   const handleChoiceClick = (letter: string, index: number) => {
-    if (showConfetti) return // prevent clicking during confetti
+    if (showConfetti) return // prevent multiple clicks during confetti
 
     if (letter === wordData.missingLetter) {
       setDroppedLetter(letter)

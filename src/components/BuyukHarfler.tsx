@@ -78,7 +78,7 @@ const BuyukHarfler: React.FC<BuyukHarflerProps> = ({ onGoHome }) => {
   const clickSoundRef = useRef(new Audio(require('../assets/sounds/click.mp3')))
 
   const speakLetter = (letter: string, index: number) => {
-    const speech = new SpeechSynthesisUtterance(letter)
+    const speech = new SpeechSynthesisUtterance(letter.toLowerCase()) // FIX: lowercase for pure sound
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)

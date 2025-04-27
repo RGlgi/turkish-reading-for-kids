@@ -27,18 +27,19 @@ export const CombineSyllables: React.FC = () => {
     ['A', 'KIL', 'AKIL'],
     ['AS', 'LAN', 'ASLAN'],
   ]
+
   const [index, setIndex] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
 
   const speak = (text: string) => {
-    const speech = new SpeechSynthesisUtterance(text)
+    const speech = new SpeechSynthesisUtterance(text.toLowerCase()) // lowercase for pure sound
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
   }
 
   const handleCombinedClick = async () => {
-    await speak(combined)
+    speak(combined) // no need await, SpeechSynthesis is async itself
     new Audio(CorrectSound).play()
     setShowConfetti(true)
 

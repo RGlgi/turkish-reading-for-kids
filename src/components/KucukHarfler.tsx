@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import './BuyukHarfler.css'
-import monsterImage from '../assets/ms-show-right.png' // your added
+import './BuyukHarfler.css' // you can use same css as BuyukHarfler
+import monsterImage from '../assets/ms-show-right.png'
 import homeIcon from '../assets/home-im.png'
+
 const letters = [
   'a',
   'b',
@@ -54,6 +55,7 @@ const getRandomColor = () => {
   ]
   return colors[Math.floor(Math.random() * colors.length)]
 }
+
 interface KucukHarflerProps {
   onGoHome: () => void
 }
@@ -65,6 +67,7 @@ const KucukHarfler: React.FC<KucukHarflerProps> = ({ onGoHome }) => {
     navigate('/main')
     onGoHome()
   }
+
   const [buttonColors, setButtonColors] = useState<string[]>(
     Array(letters.length).fill('#ffeaa7')
   )
@@ -73,16 +76,14 @@ const KucukHarfler: React.FC<KucukHarflerProps> = ({ onGoHome }) => {
   const clickSoundRef = useRef(new Audio(require('../assets/sounds/click.mp3')))
 
   const speakLetter = (letter: string, index: number) => {
-    const speech = new SpeechSynthesisUtterance(letter)
+    const speech = new SpeechSynthesisUtterance(letter) // letter is already lowercase!
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
 
-    // Play click sound
     clickSoundRef.current.currentTime = 0
     clickSoundRef.current.play()
 
-    // Animate + Change Color
     const newColors = [...buttonColors]
     newColors[index] = getRandomColor()
     setButtonColors(newColors)
@@ -104,7 +105,7 @@ const KucukHarfler: React.FC<KucukHarflerProps> = ({ onGoHome }) => {
         <div className="harfler-content">
           <img src={monsterImage} alt="Monster" className="monster-image" />
           <div className="harfler-right-side">
-            <h2>küçük Harfler</h2>
+            <h2>Küçük Harfler</h2>
             <div className="harfler-grid">
               {letters.map((letter, index) => (
                 <button

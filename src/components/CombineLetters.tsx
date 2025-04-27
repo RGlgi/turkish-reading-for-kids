@@ -40,14 +40,14 @@ export const CombineLetters: React.FC = () => {
   const [showConfetti, setShowConfetti] = useState(false)
 
   const speak = (text: string) => {
-    const speech = new SpeechSynthesisUtterance(text)
+    const speech = new SpeechSynthesisUtterance(text.toLowerCase()) // ✅ Lowercase for clean pronunciation
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
   }
 
-  const handleCombinedClick = async () => {
-    await speak(combined)
+  const handleCombinedClick = () => {
+    speak(combined)
     new Audio(CorrectSound).play()
     setShowConfetti(true)
 
@@ -62,7 +62,7 @@ export const CombineLetters: React.FC = () => {
   return (
     <div style={{ textAlign: 'center', paddingTop: '2rem' }}>
       {showConfetti && <Confetti />}
-      <h3>Heceyi Dinle ve Öğren</h3>
+      <h3>Harfleri Birleştir ve Oku</h3>
       <div className="combine-row">
         <button onClick={() => speak(a)}>{a}</button>
         <span>+</span>

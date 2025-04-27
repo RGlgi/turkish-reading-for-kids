@@ -69,7 +69,7 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
   }, [generateQuestion])
 
   const playSound = () => {
-    const speech = new SpeechSynthesisUtterance(question)
+    const speech = new SpeechSynthesisUtterance(question.toLowerCase()) // ✅ lowercased for clean Turkish pronunciation
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
@@ -97,6 +97,7 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
   return (
     <div className="ses-wrapper1">
       {showConfetti && <Confetti />}
+
       <img
         src={homeIcon}
         alt="home"
@@ -109,10 +110,10 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
           <div className="question-box2">
             <img
               src={PlayIcon}
-              alt="Harfi Dinle"
+              alt="Kelimeyi Dinle"
               onClick={playSound}
               className="sound-icon"
-              title="Harfi Dinle"
+              title="Kelimeyi Dinle"
             />
 
             <div className="choices2">

@@ -107,13 +107,15 @@ const SesSorulari: React.FC<SesSorulariProps> = ({ onGoHome }) => {
   }
 
   const playLetterSound = () => {
-    const speech = new SpeechSynthesisUtterance(questionLetter)
+    const speech = new SpeechSynthesisUtterance(questionLetter.toLowerCase()) // ✅ Lowercase to fix Google Speech issues
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
   }
 
   const handleChoiceClick = (letter: string, index: number) => {
+    if (showConfetti) return
+
     if (letter === questionLetter) {
       setFeedback('correct')
       new Audio(CorrectSound).play()
@@ -134,36 +136,37 @@ const SesSorulari: React.FC<SesSorulariProps> = ({ onGoHome }) => {
     <div className="ses-wrapper1">
       <img
         src={homeIcon}
-        alt="home"
+        alt="Ana Sayfa"
         className="home-button"
         onClick={handleHome}
       />
       <h2>Ses Soruları</h2>
+
       <div className="ses-wrapper">
         {showConfetti && <Confetti />}
 
         <div className="question-box2">
           <img
             src={PlayIcon}
-            alt="Harfi Dinle"
+            alt="Harf Sesini Dinle"
             onClick={playLetterSound}
-            title="Harfi Dinle"
+            className="sound-icon"
+            title="Harf Sesini Dinle"
           />
 
-          <div className="choices">
+          <div className="choices2">
             {choices.map((letter, index) => (
               <button
                 key={index}
-                className={`choice ${shakeIndex === index ? 'shake' : ''}`}
+                className={`choice2 ${shakeIndex === index ? 'shake' : ''}`}
                 onClick={() => handleChoiceClick(letter, index)}
-                disabled={feedback === 'correct'}
+                disabled={feedback === 'correct' || showConfetti}
               >
                 {letter}
               </button>
             ))}
           </div>
 
-          {/* Always reserve feedback space */}
           <p className="feedback">
             {feedback === 'correct'
               ? '✅ Doğru!'
@@ -171,7 +174,6 @@ const SesSorulari: React.FC<SesSorulariProps> = ({ onGoHome }) => {
               ? '❌ Yanlış!'
               : ''}
           </p>
-          {/* Next Button Removed */}
         </div>
       </div>
     </div>

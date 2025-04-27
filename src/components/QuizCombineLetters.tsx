@@ -64,14 +64,14 @@ export const QuizCombineLetters: React.FC = () => {
   }, [generateQuestion])
 
   const playSound = () => {
-    const speech = new SpeechSynthesisUtterance(question)
+    const speech = new SpeechSynthesisUtterance(question.toLowerCase()) // ✅ lowercased for pure Turkish pronunciation
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
   }
 
   const handleChoiceClick = (choice: string, index: number) => {
-    if (showConfetti) return // Prevent multiple clicks during confetti
+    if (showConfetti) return // Prevent clicking during confetti
 
     if (choice === question) {
       setFeedback('correct')
@@ -90,32 +90,35 @@ export const QuizCombineLetters: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="ses-wrapper1">
       {showConfetti && <Confetti />}
 
-      <div>
-        <img
-          src={PlayIcon}
-          alt="Harfi Dinle"
-          onClick={playSound}
-          className="sound-icon"
-          title="Harfi Dinle"
-        />
+      <div className="ses-sorulari">
+        <h2>İki Harfli Hece Soruları</h2>
+        <div className="question-box2">
+          <img
+            src={PlayIcon}
+            alt="Heceyi Dinle"
+            onClick={playSound}
+            className="sound-icon"
+            title="Heceyi Dinle"
+          />
 
-        <div className="choices">
-          {choices.map((choice, index) => (
-            <button
-              key={index}
-              className={`choice ${shakeIndex === index ? 'shake' : ''}`}
-              onClick={() => handleChoiceClick(choice, index)}
-              disabled={feedback === 'correct' || showConfetti}
-            >
-              {choice}
-            </button>
-          ))}
+          <div className="choices2">
+            {choices.map((choice, index) => (
+              <button
+                key={index}
+                className={`choice2 ${shakeIndex === index ? 'shake' : ''}`}
+                onClick={() => handleChoiceClick(choice, index)}
+                disabled={feedback === 'correct' || showConfetti}
+              >
+                {choice}
+              </button>
+            ))}
+          </div>
+
+          {feedback === 'correct' && <p className="feedback">✅ Doğru!</p>}
         </div>
-
-        {feedback === 'correct' && <p className="feedback">✅ Doğru!</p>}
       </div>
     </div>
   )
