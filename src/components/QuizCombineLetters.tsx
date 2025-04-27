@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import PlayIcon from '../assets/play-icon.png'
 import CorrectSound from '../assets/sounds/correct.mp3'
 import WrongSound from '../assets/sounds/wrong-answer.mp3'
@@ -14,14 +14,12 @@ const questions = [
   'EK',
   'AH',
   'AY',
-  'EK',
   'SU',
   'BU',
   'ŞU',
   'İN',
   'OT',
   'ÜÇ',
-  'EY',
   'AN',
   'İP',
   'İŞ',
@@ -36,7 +34,6 @@ const questions = [
   'NE',
   'ME',
   'Kİ',
-  'DA',
   'TA',
 ]
 
@@ -47,24 +44,24 @@ export const QuizCombineLetters: React.FC = () => {
   const [shakeIndex, setShakeIndex] = useState<number | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
 
-  useEffect(() => {
-    generateQuestion()
-  }, [])
-
-  const getRandomChoices = (correct: string) => {
+  const getRandomChoices = useCallback((correct: string) => {
     const others = questions.filter((q) => q !== correct)
     const shuffled = others.sort(() => 0.5 - Math.random()).slice(0, 2)
     return [...shuffled, correct].sort(() => 0.5 - Math.random())
-  }
+  }, [])
 
-  const generateQuestion = () => {
+  const generateQuestion = useCallback(() => {
     const q = questions[Math.floor(Math.random() * questions.length)]
     setQuestion(q)
     setChoices(getRandomChoices(q))
     setFeedback(null)
     setShakeIndex(null)
     setShowConfetti(false)
-  }
+  }, [getRandomChoices])
+
+  useEffect(() => {
+    generateQuestion()
+  }, [generateQuestion])
 
   const playSound = async () => {
     try {
@@ -83,6 +80,8 @@ export const QuizCombineLetters: React.FC = () => {
   }
 
   const handleChoiceClick = (choice: string, index: number) => {
+    if (showConfetti) return // Prevent multiple clicks during confetti
+
     if (choice === question) {
       setFeedback('correct')
       new Audio(CorrectSound).play()
@@ -118,7 +117,7 @@ export const QuizCombineLetters: React.FC = () => {
               key={index}
               className={`choice ${shakeIndex === index ? 'shake' : ''}`}
               onClick={() => handleChoiceClick(choice, index)}
-              disabled={feedback === 'correct'}
+              disabled={feedback === 'correct' || showConfetti}
             >
               {choice}
             </button>

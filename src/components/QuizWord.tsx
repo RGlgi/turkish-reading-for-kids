@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import PlayIcon from '../assets/play-icon.png'
 import CorrectSound from '../assets/sounds/correct.mp3'
 import WrongSound from '../assets/sounds/wrong-answer.mp3'
@@ -21,7 +21,6 @@ const questions = [
   'BEBEK',
   'ESKİ',
   'BİLGİ',
-  'ESKİ',
   'YENİ',
   'İPLİK',
   'İÇMEK',
@@ -50,24 +49,24 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
   const [shakeIndex, setShakeIndex] = useState<number | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
 
-  useEffect(() => {
-    generateQuestion()
-  }, [])
-
-  const getRandomChoices = (correct: string) => {
+  const getRandomChoices = useCallback((correct: string) => {
     const others = questions.filter((q) => q !== correct)
     const shuffled = others.sort(() => 0.5 - Math.random()).slice(0, 2)
     return [...shuffled, correct].sort(() => 0.5 - Math.random())
-  }
+  }, [])
 
-  const generateQuestion = () => {
+  const generateQuestion = useCallback(() => {
     const q = questions[Math.floor(Math.random() * questions.length)]
     setQuestion(q)
     setChoices(getRandomChoices(q))
     setFeedback(null)
     setShakeIndex(null)
     setShowConfetti(false)
-  }
+  }, [getRandomChoices])
+
+  useEffect(() => {
+    generateQuestion()
+  }, [generateQuestion])
 
   const playSound = async () => {
     try {
@@ -115,6 +114,7 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
       />
       <div className="ses-wrapper">
         <div className="ses-sorulari">
+          <h2>Kelime Soruları</h2>
           <div className="question-box2">
             <img
               src={PlayIcon}

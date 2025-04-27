@@ -21,7 +21,7 @@ const MemoryGame: React.FC<MemoryGameProps> = ({ onGoHome }) => {
     onGoHome()
   }
 
-  const [cards, setCards] = useState(shuffledLetters)
+  const [cards] = useState(shuffledLetters)
   const [flippedIndexes, setFlippedIndexes] = useState<number[]>([])
   const [matchedIndexes, setMatchedIndexes] = useState<number[]>([])
   const [showConfetti, setShowConfetti] = useState(false)
