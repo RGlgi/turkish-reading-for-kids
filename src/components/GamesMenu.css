@@ -1,0 +1,30 @@
+.games-menu-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.game-button {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  background-color: #ffd95f;
+  width: 70%;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.game-button:hover {
+  background-color: #ffc107;
+}

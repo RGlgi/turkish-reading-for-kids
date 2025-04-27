@@ -1,0 +1,55 @@
+.boyama-wrapper {
+  display: flex;
+  height: 80vh;
+  background-color: #fff;
+
+  width: 100%;
+}
+.boyama-wrapper1 {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: #fff4f790;
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+.color-palette {
+  width: 80px;
+  padding: 1rem;
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-right: 2px solid #ddd;
+}
+
+.color-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.coloring-canvas {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coloring-image {
+  width: 80%;
+  max-height: 100%;
+  cursor: url('../assets/brush-cursor.png'), auto;
+}
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 1rem;
+  color: #444;
+}

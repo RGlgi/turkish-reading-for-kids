@@ -1,0 +1,84 @@
+/* 🧡 Page container */
+.heceler-wrapper {
+  /* padding: 2rem 1rem; */
+  min-height: 50vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 🔤 Section title */
+.heceler-wrapper h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* 🔲 Inner gray card box */
+.heceler-box {
+  background-color: rgba(255, 255, 255, 0.15); /* transparent gray */
+  backdrop-filter: blur(6px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+/* 🧭 Navigation buttons */
+.heceler-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.heceler-buttons button {
+  padding: 0.8rem 1.5rem;
+  background-color: #4eff86;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.heceler-buttons button:hover {
+  background-color: #d6ffe1;
+  transform: scale(1.05);
+}
+
+/* ➕ Row for A + H = AH */
+.combine-row {
+  background-color: rgba(49, 248, 255, 0.15); /* transparent gray */
+  backdrop-filter: blur(6px);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin: 1rem 0;
+}
+
+.combine-row button {
+  background-color: #ff3503;
+  padding: 0.5rem 1rem;
+  font-size: 2.5rem;
+  border: 1px solid #aaa;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.combine-row button:hover {
+  background-color: #ffbf00;
+}

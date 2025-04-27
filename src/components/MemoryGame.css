@@ -1,0 +1,38 @@
+.memory-wrapper {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 4rem;
+  margin-top: 2rem;
+}
+
+.memory-card {
+  background-color: #cbc7c7;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  font-size: 4rem;
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-color: black;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.memory-card.flipped {
+  background-color: #ffd95f;
+}
+
+.congrats-text {
+  font-size: 2rem;
+  color: #28a745;
+  margin-bottom: 2rem;
+}

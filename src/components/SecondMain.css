@@ -1,0 +1,101 @@
+.second-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* responsive */
+  gap: 2rem;
+  padding: 1rem;
+  padding-bottom: 4rem;
+}
+/* .home-button {
+  width: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+} */
+/* Card container */
+.row-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Image styling */
+.row-image {
+  width: 100%;
+  /* max-width: 300px; */
+  height: auto;
+  object-fit: content;
+  border-radius: 0.75rem;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Text section */
+.text-content {
+  flex: 1;
+  min-width: 0; /* <-- allows better shrink */
+  text-align: center;
+}
+
+.row-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.row-description {
+  color: #555;
+  line-height: 1.6;
+  text-align: center;
+  white-space: pre-line;
+}
+
+/* Responsive: stack vertically and fit screen */
+@media (min-width: 768px) {
+  .row-container,
+  .row-container.reverse {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.row-image {
+  display: flex;
+  flex: 0 0 40%;
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.75rem;
+}
+
+.text-content {
+  flex: 1 1 60%;
+  min-width: 250px;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .row-container,
+  .row-container.reverse {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+  }
+
+  .row-image {
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .text-content {
+    width: 100%;
+  }
+}

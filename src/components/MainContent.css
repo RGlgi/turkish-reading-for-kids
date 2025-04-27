@@ -1,0 +1,80 @@
+.main-content.blurred {
+  filter: blur(4px);
+  pointer-events: none;
+}
+.main-content h2 {
+  font-size: 1.4rem;
+  color: black;
+}
+.MListWrapper {
+  background: #fff4f790;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.MList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+article {
+  width: 200px;
+  height: 200px;
+  padding: 0.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.3rem;
+}
+
+article:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: rgb(90, 90, 90); /* Optional: add highlight */
+}
+
+/* h2 {
+  font-size: 1.2rem;
+  margin: 0.2rem 0;
+} */
+
+.ButtonMore {
+  background-color: #f8f8f8;
+  border: none;
+  border-radius: 6px;
+
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.ButtonMore:hover {
+  background-color: #e0e0e0;
+}
+
+/* .card-image {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+} */
+img,
+.card-image {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 8px;
+}

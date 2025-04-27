@@ -1,0 +1,101 @@
+.story-reader {
+  background-color: #fff4f790;
+  backdrop-filter: blur(6px);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.story-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+.story-cards {
+  background-color: #fff4f790;
+  backdrop-filter: blur(6px);
+  padding: 2rem;
+  border-radius: 16px;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+.story-reader h2 {
+  margin-bottom: 1.5rem;
+}
+.story-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.story-text {
+  flex: 1;
+  text-align: left;
+}
+.read-button {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.read-button:hover {
+  background-color: #4338ca;
+}
+.sound-toggle-button {
+  background: none;
+  border: none;
+  margin-bottom: 2rem;
+}
+
+.sound-icon {
+  width: 60px;
+  height: 60px;
+  transition: transform 0.3s;
+}
+
+.sound-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Sentences appear row by row */
+.sentence-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  background-color: rgba(255, 255, 255, 0.596); /* transparent gray */
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+}
+
+/* Each word is a soft button */
+.story-word {
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  margin: 0.1rem 0.3rem; /* smaller spacing */
+  padding: 0.2rem 0.4rem; /* smaller padding */
+  border-radius: 8px;
+  transition: background-color 0.2s, border 0.2s;
+  cursor: pointer;
+}
+
+.story-word:hover {
+  background-color: #fffb2c;
+}
