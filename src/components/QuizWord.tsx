@@ -8,27 +8,27 @@ import homeIcon from '../assets/home-im.png'
 import { useNavigate } from 'react-router-dom'
 
 const questions = [
-  'BABA',
-  'ANNE',
-  'ABLA',
-  'ABİ',
-  'AYLA',
-  'ALTI',
-  'SIRA',
-  'ADAM',
-  'AYNA',
-  'BÖREK',
-  'BEBEK',
-  'ESKİ',
-  'BİLGİ',
-  'YENİ',
-  'İPLİK',
-  'İÇMEK',
-  'ESMA',
-  'YEDİ',
-  'ANLA',
-  'AKIL',
-  'ASLAN',
+  'baba',
+  'anne',
+  'abla',
+  'abi',
+  'ayla',
+  'altı',
+  'sıra',
+  'adam',
+  'ayna',
+  'börek',
+  'bebek',
+  'eski',
+  'bilgi',
+  'yeni',
+  'iplik',
+  'içmek',
+  'esma',
+  'yedi',
+  'anla',
+  'akıl',
+  'aslan',
 ]
 
 interface QuizWordProps {
@@ -69,14 +69,14 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
   }, [generateQuestion])
 
   const playSound = () => {
-    const speech = new SpeechSynthesisUtterance(question.toLowerCase()) // ✅ lowercased for clean Turkish pronunciation
+    const speech = new SpeechSynthesisUtterance(question) // Speak exactly as written (already lowercase)
     speech.lang = 'tr-TR'
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
   }
 
   const handleChoiceClick = (choice: string, index: number) => {
-    if (showConfetti) return // prevent clicking during confetti
+    if (showConfetti) return
 
     if (choice === question) {
       setFeedback('correct')
@@ -100,13 +100,15 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
 
       <img
         src={homeIcon}
-        alt="home"
+        alt="Ana Sayfa"
         className="home-button"
         onClick={handleHome}
       />
+
       <div className="ses-wrapper">
         <div className="ses-sorulari">
           <h2>Kelime Soruları</h2>
+
           <div className="question-box2">
             <img
               src={PlayIcon}
@@ -117,19 +119,26 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
             />
 
             <div className="choices2">
-              {choices.map((choice2, index) => (
+              {choices.map((choice, index) => (
                 <button
                   key={index}
                   className={`choice2 ${shakeIndex === index ? 'shake' : ''}`}
-                  onClick={() => handleChoiceClick(choice2, index)}
+                  onClick={() => handleChoiceClick(choice, index)}
                   disabled={feedback === 'correct' || showConfetti}
                 >
-                  {choice2}
+                  {choice}{' '}
+                  {/* ✅ show exactly as written (lowercase, mixedcase) */}
                 </button>
               ))}
             </div>
 
-            {feedback === 'correct' && <p className="feedback">✅ Doğru!</p>}
+            <p className="feedback">
+              {feedback === 'correct'
+                ? '✅ Doğru!'
+                : feedback === 'wrong'
+                ? '❌ Yanlış!'
+                : ''}
+            </p>
           </div>
         </div>
       </div>
