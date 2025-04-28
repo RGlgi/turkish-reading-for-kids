@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 const client = new textToSpeech.TextToSpeechClient({
-  keyFilename: path.join(__dirname, 'google-key.json'),
+  keyFilename: './google-key.json',
 })
 
 app.post('/speak', async (req, res) => {

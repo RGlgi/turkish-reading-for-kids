@@ -1,13 +1,1 @@
-{
-  "type": "service_account",
-  "project_id": "level-works-457816-q6",
-  "private_key_id": "30ab2af2be603583cd73d416e895ed65d4f6cc92",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCUpmwBP/vwW+U0\nzCJaKjKHGXcOQKrxMMgbkwOVhmL17QuEoO9dJFQxj7SVbe5dDoLbeeYUY5vYKPEv\ntt4JYEGw60dNS3j6C8UL5jmyYk2Y9GcNtum5W1r6RIEB35o0ICefpzpj3NS76Wro\nRf9VCCeuAd/2dK2i+KkrLIzm2j7vvpQC6mK7dZLFiaJokY5rHYcsylTMTmVBUn5p\n6vdXMFiEOt7SBUBCmrEPT4Z0EvDuW1P9+jJqbN7DSnRoE62hLolx9VwHRuUZLi3H\n9959Z512MX8J2V2PiIN/IZ0ihpF3MqvxS5YfhiEZ7bk+mvub3kxEjZtEE67+6FsJ\ndm30OhkzAgMBAAECggEAQfobtfJQQD6JXQW9uYdBJfWHgivxs1uTdamqzZL4GW88\nzYEgvJaDR/wgirJgOa1XJ1LTa/lKEocZhbQEmOTAQ2YqH4SADXtr2fw1X5eCGYFg\nvBWTZ1HE74+4MrysFLaw34u5vtklEsJnUPDAg107P2BVp23iI5N6gk8jutLjXETs\nwnaS8xxiEZfNIm8AqS4RUkhPHnNBXmkWTybg3j6boZ9cQ5g2faLHgFwCxeplGYEM\nWcNA97WaRFkGAqRygX7KBE1QDqjdigtju9XxStLh2cdRc+ebLW23/b8Lt8/E9Ggj\nKc2uV7tO5B7bC4kTgV6ddGM+P3YgFYdGcwIiHFnWAQKBgQDNzRg3VRAzef+U87tH\nzng0taUwXZpFkD2kdt1yzHhkoVcONPy0B8U4G+2Spibvq5E5wMuWWARj3Ugt5iGB\nw2FGBhQSbVst1wNXUYWy8iQSg6bOKbLuHtlXPBccPcLej9WJVIwa39UyFDwCJPSo\njfAYw5g7NZTC3sfq5XSasSPc2QKBgQC46KAiBWGGUYHlhBQ08CjkEGgoUNSDO4zs\nmu2NgkY6kquCA12mys4a2/oBBiGy7xd/q7l/q/p8pDhBwhCuxW34w0LVUwND5/e9\n5b6oTGyMhpj0giW9RBvVa2SKjKeQgiTiPkEZeec6yQXt7R2+Q0fE8DIK+ypwG0Y2\nLPGWKX6O6wKBgAunRGrFr1Aq5VUK5BzxzQ63Bm6Rrk2oGEV60ZlRiLOyCxrr1y9e\njUVbF33JWMUTgvqxNxYBT+ZTvmWS9WzConxzlalhddtHpJHKNPboDTDbMZPU+qPP\nLWFqLqjTungdzuqi1fgjmo/mY2t/qjbtKp5MXQ9lPlI2iT181rh3tV8pAoGAfH77\nmgxfbk0glUSJSl9MWMmHJ2XMv5LvvjpNqRJGcJdh7EaR3oP7ou/q8peLRutdufMI\nESLcouD6k6OzEckR0wS80d5ze1wKXIv8A1p5V2AkSbP67uSVjOsipXowM8a8SKu7\nrwh5nAXO/TPB6+Fmx/0k5GnZV+O1MTKvcff8IwMCgYAbsNhWJhmCRI2uMdzcD0yL\nEAMsuyUee+DO1FkD613qPVgRW6bhn7s/1mNxU4j18MjBYvU10SKS2ThHPfYn7heI\nPOVrAUHnm+QOrrzbfiBFTTCWhWsknV8Nx+TlyA9fw/qh+7CC6kmKm8YZkw+CetZg\nHfUN7daem8Ofym8KB43x7A==\n-----END PRIVATE KEY-----\n",
-  "client_email": "speech-api-access@level-works-457816-q6.iam.gserviceaccount.com",
-  "client_id": "102797805534860987805",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/speech-api-access%40level-works-457816-q6.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
+{"web":{"client_id":"983262471100-se9o3mc7cqb9v757936v26mjd2rogeu6.apps.googleusercontent.com","project_id":"turkce-okuyorum-app","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["https://turkceokuyorum.netlify.app"],"javascript_origins":["https://turkceokuyorum.netlify.app"]}}
