@@ -10,6 +10,7 @@ import coloring6 from '../assets/coloring/coloring6.png'
 import coloring7 from '../assets/coloring/coloring7.png'
 import coloring8 from '../assets/coloring/coloring8.png'
 import coloring9 from '../assets/coloring/coloring9.png'
+import coloring10 from '../assets/coloring/coloring10.png'
 import homeIcon from '../assets/home-im.png'
 
 const coloringImages = [
@@ -22,6 +23,7 @@ const coloringImages = [
   coloring7,
   coloring8,
   coloring9,
+  coloring10,
 ]
 
 const colors = [
