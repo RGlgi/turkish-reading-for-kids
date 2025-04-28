@@ -127,7 +127,6 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
                   disabled={feedback === 'correct' || showConfetti}
                 >
                   {choice}{' '}
-                  {/* ✅ show exactly as written (lowercase, mixedcase) */}
                 </button>
               ))}
             </div>

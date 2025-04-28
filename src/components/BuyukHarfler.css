@@ -39,7 +39,6 @@
 .harfler-right-side h2 {
   font-size: 2.2rem;
   margin-bottom: 1.5rem;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
   color: #2d3436;
 }
 
@@ -57,7 +56,6 @@
   padding: 1.2rem;
   border: none;
   border-radius: 16px;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
   cursor: pointer;
   transition: all 0.3s ease;
   color: #2d3436;

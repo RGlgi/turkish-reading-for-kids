@@ -9,6 +9,7 @@ import coloring5 from '../assets/coloring/coloring5.png'
 import homeIcon from '../assets/home-im.png'
 
 const coloringImages = [coloring1, coloring2, coloring3, coloring4, coloring5]
+
 const colors = [
   '#f94144',
   '#f3722c',
@@ -38,45 +39,102 @@ const Boyama: React.FC<BoyamaProps> = ({ onGoHome }) => {
     navigate('/main')
     onGoHome()
   }
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const [selectedColor, setSelectedColor] = useState('#f94144')
   const [isDrawing, setIsDrawing] = useState(false)
-  const [imageSrc, setImageSrc] = useState(getRandomImage()) // ✅ useState at top level
+  const [imageSrc, setImageSrc] = useState(getRandomImage())
 
-  // 🖼️ Load image whenever imageSrc changes
   useEffect(() => {
+    if (!canvasRef.current) return
     const canvas = canvasRef.current
-    const ctx = canvas?.getContext('2d')
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
     const img = new Image()
     img.src = imageSrc
     img.onload = () => {
-      ctx?.clearRect(0, 0, canvas!.width, canvas!.height) // clear before drawing new
-      ctx?.drawImage(img, 0, 0, canvas!.width, canvas!.height)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
     }
-  }, [imageSrc]) // ✅ re-run when imageSrc changes
+  }, [imageSrc])
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    setIsDrawing(true)
-    draw(e)
-  }
-
-  const stopDrawing = () => {
-    setIsDrawing(false)
-  }
-
-  const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!isDrawing || !canvasRef.current) return
-    const ctx = canvasRef.current.getContext('2d')
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const rect = canvasRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
+    const startDrawing = (e: MouseEvent | TouchEvent) => {
+      e.preventDefault()
+      setIsDrawing(true)
 
-    ctx.fillStyle = selectedColor
-    ctx.beginPath()
-    ctx.arc(x, y, 8, 0, Math.PI * 2)
-    ctx.fill()
+      const clientX =
+        (e as TouchEvent).touches?.[0]?.clientX ?? (e as MouseEvent).clientX
+      const clientY =
+        (e as TouchEvent).touches?.[0]?.clientY ?? (e as MouseEvent).clientY
+
+      const rect = canvas.getBoundingClientRect()
+      ctx.beginPath()
+      ctx.moveTo(clientX - rect.left, clientY - rect.top)
+    }
+
+    const draw = (e: MouseEvent | TouchEvent) => {
+      if (!isDrawing) return
+
+      const clientX =
+        (e as TouchEvent).touches?.[0]?.clientX ?? (e as MouseEvent).clientX
+      const clientY =
+        (e as TouchEvent).touches?.[0]?.clientY ?? (e as MouseEvent).clientY
+
+      const rect = canvas.getBoundingClientRect()
+
+      ctx.strokeStyle = selectedColor
+      ctx.lineWidth = 8
+      ctx.lineCap = 'round'
+
+      ctx.lineTo(clientX - rect.left, clientY - rect.top)
+      ctx.stroke()
+    }
+
+    const stopDrawing = () => {
+      setIsDrawing(false)
+      ctx.closePath()
+    }
+
+    canvas.addEventListener('mousedown', startDrawing)
+    canvas.addEventListener('mousemove', draw)
+    canvas.addEventListener('mouseup', stopDrawing)
+    canvas.addEventListener('mouseout', stopDrawing)
+
+    canvas.addEventListener('touchstart', startDrawing, { passive: false })
+    canvas.addEventListener('touchmove', draw, { passive: false })
+    canvas.addEventListener('touchend', stopDrawing)
+
+    return () => {
+      canvas.removeEventListener('mousedown', startDrawing)
+      canvas.removeEventListener('mousemove', draw)
+      canvas.removeEventListener('mouseup', stopDrawing)
+      canvas.removeEventListener('mouseout', stopDrawing)
+
+      canvas.removeEventListener('touchstart', startDrawing)
+      canvas.removeEventListener('touchmove', draw)
+      canvas.removeEventListener('touchend', stopDrawing)
+    }
+  }, [isDrawing, selectedColor])
+
+  const clearCanvas = () => {
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext('2d')
+
+    if (canvas && ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const img = new Image()
+      img.src = imageSrc
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+      }
+    }
   }
 
   return (
@@ -106,20 +164,9 @@ const Boyama: React.FC<BoyamaProps> = ({ onGoHome }) => {
         >
           Yeni Resim 🎨
         </button>
-        <button
-          onClick={() => {
-            const canvas = canvasRef.current
-            const ctx = canvas?.getContext('2d')
 
-            if (canvas && ctx) {
-              ctx.clearRect(0, 0, canvas.width, canvas.height)
-              const img = new Image()
-              img.src = imageSrc
-              img.onload = () => {
-                ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
-              }
-            }
-          }}
+        <button
+          onClick={clearCanvas}
           style={{
             display: 'block',
             margin: '0 auto 1rem',
@@ -137,9 +184,9 @@ const Boyama: React.FC<BoyamaProps> = ({ onGoHome }) => {
 
         <div className="boyama-wrapper">
           <div className="color-palette">
-            {colors.map((color, i) => (
+            {colors.map((color, index) => (
               <div
-                key={i}
+                key={index}
                 className="color-box"
                 style={{
                   backgroundColor: color,
@@ -149,15 +196,12 @@ const Boyama: React.FC<BoyamaProps> = ({ onGoHome }) => {
               ></div>
             ))}
           </div>
+
           <div className="canvas-container">
             <canvas
               ref={canvasRef}
               width={800}
               height={600}
-              onMouseDown={startDrawing}
-              onMouseMove={draw}
-              onMouseUp={stopDrawing}
-              onMouseLeave={stopDrawing}
               className="coloring-canvas"
             />
           </div>
