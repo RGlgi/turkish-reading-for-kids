@@ -17,6 +17,7 @@ import GamesMenu from './components/GamesMenu'
 import MemoryGame from './components/MemoryGame'
 import { auth } from './firebaseConfig'
 import { onAuthStateChanged } from 'firebase/auth'
+import Worksheet from 'components/Worksheet'
 
 function App() {
   const [userName, setUserName] = useState<string | null>(null)
@@ -73,6 +74,7 @@ function App() {
           path="/hafiza-oyunu"
           element={<MemoryGame onGoHome={() => {}} />}
         />
+        <Route path="/Worksheet" element={<Worksheet onGoHome={() => {}} />} />
       </Routes>
     </Router>
   )

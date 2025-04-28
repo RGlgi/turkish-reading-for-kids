@@ -15,19 +15,20 @@ interface KelimeTamamlamaProps {
 const KelimeTamamlama: React.FC<KelimeTamamlamaProps> = ({ onGoHome }) => {
   const navigate = useNavigate()
 
-  const handleHome = () => {
-    navigate('/main')
-    onGoHome()
-  }
-
   const [currentIndex, setCurrentIndex] = useState(0)
   const [droppedLetter, setDroppedLetter] = useState<string | null>(null)
   const [shakeIndex, setShakeIndex] = useState<number | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
   const [gameFinished, setGameFinished] = useState(false)
   const [choices, setChoices] = useState<string[]>([])
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
 
   const wordData = KelimeData[currentIndex]
+
+  const handleHome = () => {
+    navigate('/main')
+    onGoHome()
+  }
 
   useEffect(() => {
     const wrongLetters = ['B', 'M', 'S'].filter(
@@ -38,10 +39,31 @@ const KelimeTamamlama: React.FC<KelimeTamamlamaProps> = ({ onGoHome }) => {
     setChoices(shuffled)
   }, [currentIndex, wordData.missingLetter])
 
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices()
+      setVoices(availableVoices)
+    }
+
+    loadVoices()
+
+    if (typeof window !== 'undefined') {
+      window.speechSynthesis.onvoiceschanged = loadVoices
+    }
+  }, [])
+
   const playWordSound = () => {
-    const speech = new SpeechSynthesisUtterance(wordData.fullWord.toLowerCase()) // ✅ lowercased for clean sound
-    speech.lang = 'tr-TR'
+    const speech = new SpeechSynthesisUtterance(wordData.fullWord.toLowerCase())
+
+    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
+    if (turkishVoice) {
+      speech.voice = turkishVoice
+    } else {
+      speech.lang = 'tr-TR'
+    }
+
     speech.rate = 0.8
+    window.speechSynthesis.cancel() // ✅ Cancel any previous speech
     window.speechSynthesis.speak(speech)
   }
 

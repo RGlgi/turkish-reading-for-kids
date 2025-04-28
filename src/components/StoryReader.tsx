@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import PlayIcon from '../assets/play-icon.png'
 import PauseIcon from '../assets/pause.png'
 import './StoryReader.css'
-import { useNavigate } from 'react-router-dom'
 
 interface Story {
   id: number
@@ -19,29 +18,52 @@ interface StoryReaderProps {
 
 const StoryReader: React.FC<StoryReaderProps> = ({ onGoHome }) => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const story = location.state as Story
+
+  const [soundEnabled, setSoundEnabled] = useState(false)
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
+
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices()
+      setVoices(availableVoices)
+    }
+
+    loadVoices()
+
+    if (typeof window !== 'undefined') {
+      window.speechSynthesis.onvoiceschanged = loadVoices
+    }
+  }, [])
 
   const handleHome = () => {
     navigate('/storylist')
     onGoHome()
   }
-  const location = useLocation()
-  const story = location.state as Story
-
-  const [soundEnabled, setSoundEnabled] = useState(false)
 
   const playWord = (word: string) => {
     if (!soundEnabled) return
+
     const speech = new SpeechSynthesisUtterance(word)
-    speech.lang = 'tr-TR'
+
+    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
+    if (turkishVoice) {
+      speech.voice = turkishVoice
+    } else {
+      speech.lang = 'tr-TR'
+    }
+
     speech.rate = 0.8
+    window.speechSynthesis.cancel() // ✅ Cancel any previous speech
     window.speechSynthesis.speak(speech)
   }
 
   const toggleSound = () => {
     setSoundEnabled((prev) => !prev)
+    window.speechSynthesis.cancel() // ✅ Immediately stop reading if user turns sound off
   }
 
-  // Split by sentences (. ? !) then split sentences by words
   const sentences = story.content
     .split(/(?<=[.!?])\s+/)
     .filter((s) => s.trim().length > 0)

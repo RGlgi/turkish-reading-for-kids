@@ -38,16 +38,17 @@ interface QuizWordProps {
 export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
   const navigate = useNavigate()
 
-  const handleHome = () => {
-    navigate('/main')
-    onGoHome()
-  }
-
   const [question, setQuestion] = useState('')
   const [choices, setChoices] = useState<string[]>([])
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
   const [shakeIndex, setShakeIndex] = useState<number | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
+
+  const handleHome = () => {
+    navigate('/main')
+    onGoHome()
+  }
 
   const getRandomChoices = useCallback((correct: string) => {
     const others = questions.filter((q) => q !== correct)
@@ -68,10 +69,31 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
     generateQuestion()
   }, [generateQuestion])
 
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices()
+      setVoices(availableVoices)
+    }
+
+    loadVoices()
+
+    if (typeof window !== 'undefined') {
+      window.speechSynthesis.onvoiceschanged = loadVoices
+    }
+  }, [])
+
   const playSound = () => {
-    const speech = new SpeechSynthesisUtterance(question) // Speak exactly as written (already lowercase)
-    speech.lang = 'tr-TR'
+    const speech = new SpeechSynthesisUtterance(question)
+
+    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
+    if (turkishVoice) {
+      speech.voice = turkishVoice
+    } else {
+      speech.lang = 'tr-TR'
+    }
+
     speech.rate = 0.8
+    window.speechSynthesis.cancel() // ✅ Cancel previous speech
     window.speechSynthesis.speak(speech)
   }
 
@@ -126,7 +148,7 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
                   onClick={() => handleChoiceClick(choice, index)}
                   disabled={feedback === 'correct' || showConfetti}
                 >
-                  {choice}{' '}
+                  {choice}
                 </button>
               ))}
             </div>

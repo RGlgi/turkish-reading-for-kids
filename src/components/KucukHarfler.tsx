@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import './BuyukHarfler.css' // you can use same css as BuyukHarfler
+import './BuyukHarfler.css' // you can reuse the same CSS
 import monsterImage from '../assets/ms-show-right.png'
 import homeIcon from '../assets/home-im.png'
 
@@ -63,26 +63,41 @@ interface KucukHarflerProps {
 const KucukHarfler: React.FC<KucukHarflerProps> = ({ onGoHome }) => {
   const navigate = useNavigate()
 
-  const handleHome = () => {
-    navigate('/main')
-    onGoHome()
-  }
-
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
   const [buttonColors, setButtonColors] = useState<string[]>(
     Array(letters.length).fill('#ffeaa7')
   )
   const [clickedIndex, setClickedIndex] = useState<number | null>(null)
 
-  const clickSoundRef = useRef(new Audio(require('../assets/sounds/click.mp3')))
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices()
+      setVoices(availableVoices)
+    }
+
+    loadVoices()
+
+    if (typeof window !== 'undefined') {
+      window.speechSynthesis.onvoiceschanged = loadVoices
+    }
+  }, [])
+
+  const handleHome = () => {
+    navigate('/main')
+    onGoHome()
+  }
 
   const speakLetter = (letter: string, index: number) => {
-    const speech = new SpeechSynthesisUtterance(letter) // letter is already lowercase!
-    speech.lang = 'tr-TR'
+    const speech = new SpeechSynthesisUtterance(letter)
+
+    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
+    if (turkishVoice) {
+      speech.voice = turkishVoice
+    } else {
+      speech.lang = 'tr-TR' // fallback to setting Turkish language
+    }
     speech.rate = 0.8
     window.speechSynthesis.speak(speech)
-
-    clickSoundRef.current.currentTime = 0
-    clickSoundRef.current.play()
 
     const newColors = [...buttonColors]
     newColors[index] = getRandomColor()

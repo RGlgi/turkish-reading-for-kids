@@ -38,6 +38,12 @@ const GamesMenu: React.FC<GamesMenuProps> = ({ onGoHome }) => {
           >
             Hafıza Oyunu
           </button>
+          <button
+            onClick={() => navigate('/Worksheet')}
+            className="game-button"
+          >
+            Kelime Puzzle
+          </button>
         </div>
       </div>
     </div>

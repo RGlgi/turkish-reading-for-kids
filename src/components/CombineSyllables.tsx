@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Confetti from 'react-confetti'
 import CorrectSound from '../assets/sounds/correct.mp3'
 
@@ -30,16 +30,38 @@ export const CombineSyllables: React.FC = () => {
 
   const [index, setIndex] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
+
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices()
+      setVoices(availableVoices)
+    }
+
+    loadVoices()
+
+    if (typeof window !== 'undefined') {
+      window.speechSynthesis.onvoiceschanged = loadVoices
+    }
+  }, [])
 
   const speak = (text: string) => {
-    const speech = new SpeechSynthesisUtterance(text.toLowerCase()) // lowercase for pure sound
-    speech.lang = 'tr-TR'
+    const speech = new SpeechSynthesisUtterance(text.toLowerCase())
+
+    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
+    if (turkishVoice) {
+      speech.voice = turkishVoice
+    } else {
+      speech.lang = 'tr-TR'
+    }
+
     speech.rate = 0.8
+    window.speechSynthesis.cancel() // ✅ Cancel any old speech
     window.speechSynthesis.speak(speech)
   }
 
-  const handleCombinedClick = async () => {
-    speak(combined) // no need await, SpeechSynthesis is async itself
+  const handleCombinedClick = () => {
+    speak(combined)
     new Audio(CorrectSound).play()
     setShowConfetti(true)
 
