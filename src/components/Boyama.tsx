@@ -6,9 +6,23 @@ import coloring2 from '../assets/coloring/coloring2.png'
 import coloring3 from '../assets/coloring/coloring3.png'
 import coloring4 from '../assets/coloring/coloring4.png'
 import coloring5 from '../assets/coloring/coloring5.png'
+import coloring6 from '../assets/coloring/coloring6.png'
+import coloring7 from '../assets/coloring/coloring7.png'
+import coloring8 from '../assets/coloring/coloring8.png'
+import coloring9 from '../assets/coloring/coloring9.png'
 import homeIcon from '../assets/home-im.png'
 
-const coloringImages = [coloring1, coloring2, coloring3, coloring4, coloring5]
+const coloringImages = [
+  coloring1,
+  coloring2,
+  coloring3,
+  coloring4,
+  coloring5,
+  coloring6,
+  coloring7,
+  coloring8,
+  coloring9,
+]
 
 const colors = [
   '#f94144',
