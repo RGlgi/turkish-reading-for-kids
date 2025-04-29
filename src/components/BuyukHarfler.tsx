@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import './BuyukHarfler.css'
 import homeIcon from '../assets/home-im.png'
 import monsterImage from '../assets/ms-show-right.png'
-import { Speak } from './utils/Speak'
+// import { Speak } from './utils/Speak'
 import { SoundButton } from './utils/SoundButton'
 
 const letters = [
@@ -78,8 +78,7 @@ const BuyukHarfler: React.FC<BuyukHarflerProps> = ({ onGoHome }) => {
   }
 
   const handleLetterClick = (letter: string, index: number) => {
-    Speak(letter)
-
+    // DO NOT call Speak(letter) here — SoundButton already does it
     const newColors = [...buttonColors]
     newColors[index] = getRandomColor()
     setButtonColors(newColors)
@@ -92,7 +91,7 @@ const BuyukHarfler: React.FC<BuyukHarflerProps> = ({ onGoHome }) => {
     <div className="harfler-wrapper1">
       <img
         src={homeIcon}
-        alt="home"
+        alt="Ana Sayfa"
         className="home-button"
         onClick={handleHome}
       />
