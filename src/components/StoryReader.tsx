@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import PlayIcon from '../assets/play-icon.png'
 import PauseIcon from '../assets/pause.png'
 import './StoryReader.css'
+import { Speak } from './utils/Speak'
 
 interface Story {
   id: number
@@ -22,20 +23,6 @@ const StoryReader: React.FC<StoryReaderProps> = ({ onGoHome }) => {
   const story = location.state as Story
 
   const [soundEnabled, setSoundEnabled] = useState(false)
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
-
-  useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices()
-      setVoices(availableVoices)
-    }
-
-    loadVoices()
-
-    if (typeof window !== 'undefined') {
-      window.speechSynthesis.onvoiceschanged = loadVoices
-    }
-  }, [])
 
   const handleHome = () => {
     navigate('/storylist')
@@ -44,24 +31,12 @@ const StoryReader: React.FC<StoryReaderProps> = ({ onGoHome }) => {
 
   const playWord = (word: string) => {
     if (!soundEnabled) return
-
-    const speech = new SpeechSynthesisUtterance(word)
-
-    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
-    if (turkishVoice) {
-      speech.voice = turkishVoice
-    } else {
-      speech.lang = 'tr-TR'
-    }
-
-    speech.rate = 0.8
-    window.speechSynthesis.cancel() // ✅ Cancel any previous speech
-    window.speechSynthesis.speak(speech)
+    Speak(word)
   }
 
   const toggleSound = () => {
     setSoundEnabled((prev) => !prev)
-    window.speechSynthesis.cancel() // ✅ Immediately stop reading if user turns sound off
+    window.speechSynthesis.cancel()
   }
 
   const sentences = story.content

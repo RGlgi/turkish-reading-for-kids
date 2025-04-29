@@ -6,6 +6,7 @@ import WrongSound from '../assets/sounds/wrong-answer.mp3'
 import PlayIcon from '../assets/play-icon.png'
 import homeIcon from '../assets/home-im.png'
 import { useNavigate } from 'react-router-dom'
+import { Speak } from './utils/Speak'
 
 const letters = [
   'A',
@@ -82,7 +83,6 @@ interface SesSorulariProps {
 const SesSorulari: React.FC<SesSorulariProps> = ({ onGoHome }) => {
   const navigate = useNavigate()
 
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
   const [questionLetter, setQuestionLetter] = useState('')
   const [choices, setChoices] = useState<string[]>([])
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
@@ -91,19 +91,6 @@ const SesSorulari: React.FC<SesSorulariProps> = ({ onGoHome }) => {
 
   useEffect(() => {
     generateQuestion()
-  }, [])
-
-  useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices()
-      setVoices(availableVoices)
-    }
-
-    loadVoices()
-
-    if (typeof window !== 'undefined') {
-      window.speechSynthesis.onvoiceschanged = loadVoices
-    }
   }, [])
 
   const handleHome = () => {
@@ -121,18 +108,7 @@ const SesSorulari: React.FC<SesSorulariProps> = ({ onGoHome }) => {
   }
 
   const playLetterSound = () => {
-    const speech = new SpeechSynthesisUtterance(questionLetter.toLowerCase())
-
-    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
-    if (turkishVoice) {
-      speech.voice = turkishVoice
-    } else {
-      speech.lang = 'tr-TR'
-    }
-
-    speech.rate = 0.8
-    window.speechSynthesis.cancel() // ✅ Stop any previous speech before starting
-    window.speechSynthesis.speak(speech)
+    Speak(questionLetter)
   }
 
   const handleChoiceClick = (letter: string, index: number) => {

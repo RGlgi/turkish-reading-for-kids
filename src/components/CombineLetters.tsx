@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Confetti from 'react-confetti'
 import CorrectSound from '../assets/sounds/correct.mp3'
+import { Speak } from './utils/Speak'
+import { SoundButton } from './utils/SoundButton'
 
 export const CombineLetters: React.FC = () => {
   const syllables = [
@@ -38,38 +40,9 @@ export const CombineLetters: React.FC = () => {
 
   const [index, setIndex] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
-
-  useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices()
-      setVoices(availableVoices)
-    }
-
-    loadVoices()
-
-    if (typeof window !== 'undefined') {
-      window.speechSynthesis.onvoiceschanged = loadVoices
-    }
-  }, [])
-
-  const speak = (text: string) => {
-    const speech = new SpeechSynthesisUtterance(text.toLowerCase())
-
-    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
-    if (turkishVoice) {
-      speech.voice = turkishVoice
-    } else {
-      speech.lang = 'tr-TR'
-    }
-
-    speech.rate = 0.8
-    window.speechSynthesis.cancel() // ✅ cancel before speaking
-    window.speechSynthesis.speak(speech)
-  }
 
   const handleCombinedClick = () => {
-    speak(combined)
+    Speak(combined)
     new Audio(CorrectSound).play()
     setShowConfetti(true)
 
@@ -86,9 +59,9 @@ export const CombineLetters: React.FC = () => {
       {showConfetti && <Confetti />}
       <h3>Harfleri Birleştir ve Oku</h3>
       <div className="combine-row">
-        <button onClick={() => speak(a)}>{a}</button>
+        <SoundButton text={a} />
         <span>+</span>
-        <button onClick={() => speak(b)}>{b}</button>
+        <SoundButton text={b} />
         <span>=</span>
         <button onClick={handleCombinedClick}>{combined}</button>
       </div>

@@ -62,7 +62,7 @@ const KelimeTamamlama: React.FC<KelimeTamamlamaProps> = ({ onGoHome }) => {
       speech.lang = 'tr-TR'
     }
 
-    speech.rate = 0.8
+    speech.rate = 0.4
     window.speechSynthesis.cancel() // ✅ Cancel any previous speech
     window.speechSynthesis.speak(speech)
   }

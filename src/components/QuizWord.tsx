@@ -6,6 +6,7 @@ import Confetti from 'react-confetti'
 import './SesSorulari.css'
 import homeIcon from '../assets/home-im.png'
 import { useNavigate } from 'react-router-dom'
+import { Speak } from './utils/Speak'
 
 const questions = [
   'baba',
@@ -43,7 +44,6 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null)
   const [shakeIndex, setShakeIndex] = useState<number | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
 
   const handleHome = () => {
     navigate('/main')
@@ -69,32 +69,8 @@ export const QuizWord: React.FC<QuizWordProps> = ({ onGoHome }) => {
     generateQuestion()
   }, [generateQuestion])
 
-  useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices()
-      setVoices(availableVoices)
-    }
-
-    loadVoices()
-
-    if (typeof window !== 'undefined') {
-      window.speechSynthesis.onvoiceschanged = loadVoices
-    }
-  }, [])
-
   const playSound = () => {
-    const speech = new SpeechSynthesisUtterance(question)
-
-    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
-    if (turkishVoice) {
-      speech.voice = turkishVoice
-    } else {
-      speech.lang = 'tr-TR'
-    }
-
-    speech.rate = 0.8
-    window.speechSynthesis.cancel() // ✅ Cancel previous speech
-    window.speechSynthesis.speak(speech)
+    Speak(question)
   }
 
   const handleChoiceClick = (choice: string, index: number) => {

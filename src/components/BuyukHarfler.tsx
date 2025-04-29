@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './BuyukHarfler.css'
 import homeIcon from '../assets/home-im.png'
 import monsterImage from '../assets/ms-show-right.png'
+import { Speak } from './utils/Speak'
+import { SoundButton } from './utils/SoundButton'
 
 const letters = [
   'A',
@@ -15,7 +17,7 @@ const letters = [
   'G',
   'Ğ',
   'H',
-  'ı',
+  'I',
   'İ',
   'J',
   'K',
@@ -65,41 +67,18 @@ interface BuyukHarflerProps {
 const BuyukHarfler: React.FC<BuyukHarflerProps> = ({ onGoHome }) => {
   const navigate = useNavigate()
 
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([])
   const [buttonColors, setButtonColors] = useState<string[]>(
     Array(letters.length).fill('#ffeaa7')
   )
   const [clickedIndex, setClickedIndex] = useState<number | null>(null)
-
-  useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = window.speechSynthesis.getVoices()
-      setVoices(availableVoices)
-    }
-
-    loadVoices()
-
-    if (typeof window !== 'undefined') {
-      window.speechSynthesis.onvoiceschanged = loadVoices
-    }
-  }, [])
 
   const handleHome = () => {
     navigate('/main')
     onGoHome()
   }
 
-  const speakLetter = (letter: string, index: number) => {
-    const speech = new SpeechSynthesisUtterance(letter.toLowerCase())
-
-    const turkishVoice = voices.find((voice) => voice.lang === 'tr-TR')
-    if (turkishVoice) {
-      speech.voice = turkishVoice
-    } else {
-      speech.lang = 'tr-TR' // fallback, still set language
-    }
-    speech.rate = 0.8
-    window.speechSynthesis.speak(speech)
+  const handleLetterClick = (letter: string, index: number) => {
+    Speak(letter)
 
     const newColors = [...buttonColors]
     newColors[index] = getRandomColor()
@@ -124,16 +103,15 @@ const BuyukHarfler: React.FC<BuyukHarflerProps> = ({ onGoHome }) => {
             <h2>Büyük Harfler</h2>
             <div className="harfler-grid">
               {letters.map((letter, index) => (
-                <button
+                <SoundButton
                   key={index}
+                  text={letter}
                   className={`harf-button ${
                     clickedIndex === index ? 'bounce' : ''
                   }`}
-                  onClick={() => speakLetter(letter, index)}
+                  onClickExtra={() => handleLetterClick(letter, index)}
                   style={{ backgroundColor: buttonColors[index] }}
-                >
-                  {letter}
-                </button>
+                />
               ))}
             </div>
           </div>

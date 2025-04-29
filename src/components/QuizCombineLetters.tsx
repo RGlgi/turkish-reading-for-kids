@@ -4,6 +4,7 @@ import CorrectSound from '../assets/sounds/correct.mp3'
 import WrongSound from '../assets/sounds/wrong-answer.mp3'
 import Confetti from 'react-confetti'
 import './SesSorulari.css'
+import { Speak } from './utils/Speak'
 
 const questions = [
   'OH',
@@ -64,14 +65,11 @@ export const QuizCombineLetters: React.FC = () => {
   }, [generateQuestion])
 
   const playSound = () => {
-    const speech = new SpeechSynthesisUtterance(question.toLowerCase()) // ✅ lowercased for pure Turkish pronunciation
-    speech.lang = 'tr-TR'
-    speech.rate = 0.8
-    window.speechSynthesis.speak(speech)
+    Speak(question)
   }
 
   const handleChoiceClick = (choice: string, index: number) => {
-    if (showConfetti) return // Prevent clicking during confetti
+    if (showConfetti) return
 
     if (choice === question) {
       setFeedback('correct')
